@@ -5,45 +5,60 @@ import { Link, useNavigate } from "react-router-dom";
 
 import TokenContext from "../contexts/TokenContext";
 
+import { ThreeDots } from 'react-loader-spinner'
 import logo from "../assets/logo.svg";
 
 export default function Signin() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const {token, setToken} = useContext(TokenContext);
+    const [loading, setLoading] = useState(false);
+    const { token, setToken } = useContext(TokenContext);
     const navigate = useNavigate();
 
-    function login (event) {
+    function login(event) {
         event.preventDefault();
 
-        const promise = axios.post (
+        setLoading(true);
+
+        const promise = axios.post(
             "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login",
             {
                 email: email,
                 password: password
             });
         promise.catch(() => {
+            setLoading(false);
             alert("O email ou senha não existem");
         });
-        promise.then ((response) => {
-            console.log(response.data);
-        })
-    }
+        promise.then((response) => {
+            setLoading(false);
+
+            const userToken = response.data.token;
+            setToken(userToken);
+
+            navigate('/today');
+        });
+    };
 
     return (
         <>
             <Container>
                 <img src={logo} />
                 <form onSubmit={login}>
-                    <input type="email" value={email} placeholder="email" onChange={v => setEmail(v.target.value)} required />
-                    <input type="password" value={password} placeholder="senha" onChange={v => setPassword(v.target.value)} required />
-                    <button type="submit">Entrar</button>
+                    <input type="email" value={email} placeholder="email" onChange={v => setEmail(v.target.value)} required disabled={loading} />
+                    <input type="password" value={password} placeholder="senha" onChange={v => setPassword(v.target.value)} required disabled={loading} />
+                    <button type="submit" disabled={loading}>{
+                        loading ?
+                            <ThreeDots color="#FFFFFF" height={15} width={50} />
+                            :
+                            <p>Entrar</p>
+                    }</button>
 
                 </form>
                 <Link to="/signup" style={{ textDecorationColor: '#52B6FF' }}>
                     <SigninLink>Não tem uma conta? Cadastre-se!</SigninLink>
                 </Link>
-                
+
 
             </Container>
 
@@ -84,6 +99,8 @@ const Container = styled.div`
         border-radius: 8px;
 
         outline: none;
+
+        opacity: ${props => props.disabled ? 0.2 : 1};
         
         font-size: 20px;
     }
@@ -93,6 +110,10 @@ const Container = styled.div`
     }
 
     button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
         width: 300px;
         height: 45px;
 
@@ -102,6 +123,7 @@ const Container = styled.div`
         font-size: 20px;
 
         background-color: #52B6FF;
+        opacity: ${props => props.disabled ? 0.5 : 1};
         color: #FFFFFF;
     }
 `;

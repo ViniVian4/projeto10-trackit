@@ -4,6 +4,7 @@ import Signin from "./Signin";
 import Signup from "./Signup";
 
 import TokenContext from "../contexts/TokenContext";
+import Today from "./Today";
 
 export default function App() {
     const [token, setToken] = useState("");
@@ -15,6 +16,7 @@ export default function App() {
                     <Routes>
                         <Route path="/" element={<Signin />} />
                         <Route path="/signup" element={<Signup />} />
+                        <Route path="/today" element={<Today />} />
                     </Routes>
                 </BrowserRouter>
             </TokenContext.Provider>
