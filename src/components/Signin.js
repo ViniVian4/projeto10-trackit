@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { Link, useNavigate } from "react-router-dom";
 
-import TokenContext from "../contexts/TokenContext";
+import UserContext from "../contexts/UserContext";
 
 import { ThreeDots } from 'react-loader-spinner'
 import logo from "../assets/logo.svg";
@@ -12,7 +12,11 @@ export default function Signin() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
-    const { token, setToken } = useContext(TokenContext);
+
+    const { token, image } = useContext(UserContext);
+    const setToken = token[1];
+    const setImage = image[1];
+
     const navigate = useNavigate();
 
     function login(event) {
@@ -34,7 +38,9 @@ export default function Signin() {
             setLoading(false);
 
             const userToken = response.data.token;
+            const userImage = response.data.image;
             setToken(userToken);
+            setImage(userImage);
 
             navigate('/today');
         });

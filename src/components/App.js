@@ -3,15 +3,16 @@ import { useState } from "react";
 import Signin from "./Signin";
 import Signup from "./Signup";
 
-import TokenContext from "../contexts/TokenContext";
+import UserContext from "../contexts/UserContext";
 import Today from "./Today";
 
 export default function App() {
-    const [token, setToken] = useState("");
+    const [tokenValue, setToken] = useState("");
+    const [imageURL, setImage] = useState("");
 
     return (
         <>
-            <TokenContext.Provider value={{ token, setToken }} >
+            <UserContext.Provider value={{ token :[tokenValue, setToken], image: [imageURL, setImage] }} >
                 <BrowserRouter>
                     <Routes>
                         <Route path="/" element={<Signin />} />
@@ -19,7 +20,7 @@ export default function App() {
                         <Route path="/today" element={<Today />} />
                     </Routes>
                 </BrowserRouter>
-            </TokenContext.Provider>
+            </UserContext.Provider>
         </>
     );
 }
