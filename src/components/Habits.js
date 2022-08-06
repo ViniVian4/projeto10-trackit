@@ -3,13 +3,13 @@ import axios from 'axios';
 import styled from 'styled-components';
 
 import UserContext from "../contexts/UserContext";
+import { useLocal } from "./UseLocal";
 
 import Habit from './Habit';
 import NewHabit from './NewHabit';
-import TopBar from "./TopBar";
 
 export default function Habits() {
-    const { userData } = useContext(UserContext);
+    const [userData, setUserData] = useLocal()
     const userToken = userData.token;
     
     const [habits, setHabits] = useState([]);
@@ -43,7 +43,6 @@ export default function Habits() {
     return (
 
         <Container>
-            <TopBar />
             <ContentContainer>
                 <Header>
                     <h2>Meus hábitos</h2>
@@ -79,7 +78,6 @@ export default function Habits() {
                     )}
 
             </ContentContainer>
-            <BottomBar />
         </Container>
 
     );
@@ -143,17 +141,4 @@ const HabitsContainer = styled.div`
 
     font-size: 18px;
     color: #666666;
-`;
-
-const BottomBar = styled.div` 
-
-    height: 70px;
-    max-height: 70px;
-    width: 100%;
-
-    position: fixed;
-    bottom: 0;
-    left: 0;
-
-    background-color: #FFFFFF;
 `;

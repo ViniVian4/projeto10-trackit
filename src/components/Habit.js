@@ -1,13 +1,12 @@
 import axios from 'axios';
 import styled from 'styled-components';
-import { useContext } from "react";
 
-import UserContext from '../contexts/UserContext';
+import { useLocal } from "./UseLocal";
 
 import thrash from "../assets/thrash.svg";
 
 export default function Habit({ id, name, daysSelected, getHabits }) {
-    const { userData } = useContext(UserContext);
+    const [userData, setUserData] = useLocal();
     const userToken = userData.token;
 
     const days =

@@ -1,11 +1,12 @@
 import styled from 'styled-components';
+import BottomBar from './BottomBar';
 
 import TopBar from "./TopBar";
 
 export default function Today() {
     return (
         <Container>
-            <TopBar />
+
         </Container>        
     );
 };

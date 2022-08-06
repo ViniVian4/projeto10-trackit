@@ -3,17 +3,18 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { Link, useNavigate } from "react-router-dom";
 
-import UserContext from "../contexts/UserContext";
+import { useLocal } from "./UseLocal";
 
 import { ThreeDots } from 'react-loader-spinner'
 import logo from "../assets/logo.svg";
+import { useLocalImage, useLocalToken } from "./UseLocal";
 
 export default function Signin() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
 
-    const {setUserData} = useContext(UserContext);
+    const [userData, setUserData] = useLocal();
 
     const navigate = useNavigate();
 
@@ -40,6 +41,9 @@ export default function Signin() {
             const id = response.data.id;
             
             setUserData({token, image, id});
+
+            const data = JSON.stringify({token, image, id});
+            localStorage.setItem("trackitUserData", data);
 
             navigate('/today');
         });

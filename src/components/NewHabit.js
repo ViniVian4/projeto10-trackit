@@ -2,7 +2,7 @@ import { useState, useContext } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 
-import UserContext from "../contexts/UserContext";
+import { useLocal } from "./UseLocal";
 
 import { ThreeDots } from 'react-loader-spinner';
 
@@ -15,7 +15,7 @@ export default function NewHabit(
         setShowNewHabit,
         getHabits
     }) {
-    const { userData } = useContext(UserContext);
+    const [userData, setUserData] = useLocal();
     const userToken = userData.token;
 
     const [loading, setLoading] = useState(false);

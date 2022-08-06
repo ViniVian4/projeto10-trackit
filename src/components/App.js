@@ -4,19 +4,20 @@ import Signin from "./Signin";
 import Signup from "./Signup";
 
 import UserContext from "../contexts/UserContext";
+import PrivatePage from "./PrivatePage";
 
 import Today from "./Today";
 import Habits from "./Habits";
 
 export default function App() {
-    const [userData, setUserData] = useState("");
+    const [todayDone, setTodayDone] = useState("");
 
     return (
         <>
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={
-                        <UserContext.Provider value={{ setUserData }} >
+                        <UserContext.Provider value={{ setTodayDone }} >
                             <Signin />
                         </UserContext.Provider>
                     } />
@@ -24,14 +25,18 @@ export default function App() {
                     <Route path="/signup" element={<Signup />} />
 
                     <Route path="/today" element={
-                        <UserContext.Provider value={{ userData }} >
-                            <Today />
+                        <UserContext.Provider value={{ todayDone }} >
+                            <PrivatePage>
+                                <Today />
+                            </PrivatePage>
                         </UserContext.Provider>
                     } />
 
                     <Route path="/habits" element={
-                        <UserContext.Provider value={{ userData }} >
-                            <Habits />
+                        <UserContext.Provider value={{ todayDone }} >
+                            <PrivatePage>
+                                <Habits />
+                            </PrivatePage>
                         </UserContext.Provider>
                     } />
 
