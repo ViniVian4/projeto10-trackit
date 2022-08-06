@@ -13,9 +13,7 @@ export default function Signin() {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
 
-    const { token, image } = useContext(UserContext);
-    const setToken = token[1];
-    const setImage = image[1];
+    const {setUserData} = useContext(UserContext);
 
     const navigate = useNavigate();
 
@@ -37,10 +35,11 @@ export default function Signin() {
         promise.then((response) => {
             setLoading(false);
 
-            const userToken = response.data.token;
-            const userImage = response.data.image;
-            setToken(userToken);
-            setImage(userImage);
+            const token = response.data.token;
+            const image = response.data.image
+            const id = response.data.id;
+            
+            setUserData({token, image, id});
 
             navigate('/today');
         });

@@ -4,10 +4,8 @@ import styled from 'styled-components';
 import UserContext from "../contexts/UserContext";
 
 export default function TopBar() {
-    const { image } = useContext(UserContext);
-    const [imageURL] = image;
-
-    console.log(imageURL);
+    const { userData } = useContext(UserContext);
+    const imageURL = userData.image;
 
     return (
         <TopBarDiv>
