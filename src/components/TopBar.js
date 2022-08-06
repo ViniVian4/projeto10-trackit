@@ -1,9 +1,10 @@
 import styled from 'styled-components';
+import { useContext } from 'react';
 
-import { useLocal } from "./UseLocal";
+import UserContext from "../contexts/UserContext";
 
 export default function TopBar() {
-    const [userData, setUserData] = useLocal();
+    const { userData } = useContext(UserContext);
     const imageURL = userData.image;
 
     return (

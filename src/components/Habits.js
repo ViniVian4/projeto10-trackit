@@ -3,13 +3,12 @@ import axios from 'axios';
 import styled from 'styled-components';
 
 import UserContext from "../contexts/UserContext";
-import { useLocal } from "./UseLocal";
 
 import Habit from './Habit';
 import NewHabit from './NewHabit';
 
 export default function Habits() {
-    const [userData, setUserData] = useLocal()
+    const { userData } = useContext(UserContext);
     const userToken = userData.token;
     
     const [habits, setHabits] = useState([]);

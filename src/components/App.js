@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useState } from "react";
 import Signin from "./Signin";
 import Signup from "./Signup";
 
@@ -8,16 +7,17 @@ import PrivatePage from "./PrivatePage";
 
 import Today from "./Today";
 import Habits from "./Habits";
+import { useLocal } from "./UseLocal";
 
 export default function App() {
-    const [todayDone, setTodayDone] = useState("");
+    const [userData, setUserData] = useLocal();
 
     return (
         <>
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={
-                        <UserContext.Provider value={{ setTodayDone }} >
+                        <UserContext.Provider value={{ setUserData }} >
                             <Signin />
                         </UserContext.Provider>
                     } />
@@ -25,7 +25,7 @@ export default function App() {
                     <Route path="/signup" element={<Signup />} />
 
                     <Route path="/today" element={
-                        <UserContext.Provider value={{ todayDone }} >
+                        <UserContext.Provider value={{ userData }} >
                             <PrivatePage>
                                 <Today />
                             </PrivatePage>
@@ -33,7 +33,7 @@ export default function App() {
                     } />
 
                     <Route path="/habits" element={
-                        <UserContext.Provider value={{ todayDone }} >
+                        <UserContext.Provider value={{ userData }} >
                             <PrivatePage>
                                 <Habits />
                             </PrivatePage>

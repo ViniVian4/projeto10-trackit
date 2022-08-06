@@ -1,22 +1,55 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import styled from 'styled-components';
 import axios from 'axios';
 import { Link, useNavigate } from "react-router-dom";
 
 import { useLocal } from "./UseLocal";
+import UserContext from "../contexts/UserContext";
 
 import { ThreeDots } from 'react-loader-spinner'
 import logo from "../assets/logo.svg";
-import { useLocalImage, useLocalToken } from "./UseLocal";
 
 export default function Signin() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
 
-    const [userData, setUserData] = useLocal();
+    const {setUserData} = useContext(UserContext);
 
     const navigate = useNavigate();
+
+    const [ndata] = useLocal();
+
+    useEffect(() => {
+        if (ndata) {
+            setLoading(true);
+    
+            const promise = axios.post(
+                "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login",
+                {
+                    email: ndata.email,
+                    password: ndata.password
+                });
+            promise.catch(() => {
+                setLoading(false);
+                alert("O email ou senha não existem");
+            });
+            promise.then((response) => {
+                setLoading(false);
+    
+                // const token = response.data.token;
+                // const image = response.data.image
+                // const id = response.data.id;
+                
+                setUserData(response.data);
+    
+                const data = JSON.stringify(response.data);
+                localStorage.setItem("trackitUserData", data);
+    
+                navigate('/today');
+            });
+        }
+    }, [ndata])
 
     function login(event) {
         event.preventDefault();
@@ -36,13 +69,13 @@ export default function Signin() {
         promise.then((response) => {
             setLoading(false);
 
-            const token = response.data.token;
-            const image = response.data.image
-            const id = response.data.id;
+            // const token = response.data.token;
+            // const image = response.data.image
+            // const id = response.data.id;
             
-            setUserData({token, image, id});
+            setUserData(response.data);
 
-            const data = JSON.stringify({token, image, id});
+            const data = JSON.stringify(response.data);
             localStorage.setItem("trackitUserData", data);
 
             navigate('/today');

@@ -2,7 +2,7 @@ import { useState, useContext } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 
-import { useLocal } from "./UseLocal";
+import UserContext from "../contexts/UserContext";
 
 import { ThreeDots } from 'react-loader-spinner';
 
@@ -15,8 +15,8 @@ export default function NewHabit(
         setShowNewHabit,
         getHabits
     }) {
-    const [userData, setUserData] = useLocal();
-    const userToken = userData.token;
+        const { userData } = useContext(UserContext);
+        const userToken = userData.token;
 
     const [loading, setLoading] = useState(false);
 
@@ -54,7 +54,7 @@ export default function NewHabit(
 
     function select(key) {
         if (daysSelected.includes(days[key].id)) {
-            let newSelected = daysSelected.filter(d => days[key].id != d);
+            let newSelected = daysSelected.filter(d => days[key].id !== d);
             setDaysSelected(newSelected);
         }
         else {
@@ -67,6 +67,7 @@ export default function NewHabit(
 
         if (daysSelected.length === 0 || name.trim() === "") {
             alert("Algo deu errado");
+            setLoading(false);
             return;
         }
 
