@@ -8,9 +8,11 @@ import PrivatePage from "./PrivatePage";
 import Today from "./Today";
 import Habits from "./Habits";
 import { useLocal } from "./UseLocal";
+import { useState } from "react";
 
 export default function App() {
-    const [userData, setUserData] = useLocal();
+    const [userData, setUserData] = useState("");
+    const [daylieDone, setDaylieDone] = useState(0);
 
     return (
         <>
@@ -25,7 +27,7 @@ export default function App() {
                     <Route path="/signup" element={<Signup />} />
 
                     <Route path="/today" element={
-                        <UserContext.Provider value={{ userData }} >
+                        <UserContext.Provider value={{ userData, daylieDone, setDaylieDone }} >
                             <PrivatePage>
                                 <Today />
                             </PrivatePage>

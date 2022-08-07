@@ -14,42 +14,9 @@ export default function Signin() {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
 
-    const {setUserData} = useContext(UserContext);
+    const { setUserData } = useContext(UserContext);
 
     const navigate = useNavigate();
-
-    const [ndata] = useLocal();
-
-    useEffect(() => {
-        if (ndata) {
-            setLoading(true);
-    
-            const promise = axios.post(
-                "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login",
-                {
-                    email: ndata.email,
-                    password: ndata.password
-                });
-            promise.catch(() => {
-                setLoading(false);
-                alert("O email ou senha não existem");
-            });
-            promise.then((response) => {
-                setLoading(false);
-    
-                // const token = response.data.token;
-                // const image = response.data.image
-                // const id = response.data.id;
-                
-                setUserData(response.data);
-    
-                const data = JSON.stringify(response.data);
-                localStorage.setItem("trackitUserData", data);
-    
-                navigate('/today');
-            });
-        }
-    }, [ndata])
 
     function login(event) {
         event.preventDefault();
@@ -69,14 +36,11 @@ export default function Signin() {
         promise.then((response) => {
             setLoading(false);
 
-            // const token = response.data.token;
-            // const image = response.data.image
-            // const id = response.data.id;
-            
-            setUserData(response.data);
+            const token = response.data.token;
+            const image = response.data.image
+            const id = response.data.id;
 
-            const data = JSON.stringify(response.data);
-            localStorage.setItem("trackitUserData", data);
+            setUserData({ token, image, id });
 
             navigate('/today');
         });

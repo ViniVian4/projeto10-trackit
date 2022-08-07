@@ -23,16 +23,20 @@ export default function NewHabit(
     const days =
         [
             {
-                id: 1,
+                id: 0,
                 name: "D"
             },
             {
-                id: 2,
+                id: 1,
                 name: "S"
             },
             {
-                id: 3,
+                id: 2,
                 name: "T"
+            },
+            {
+                id: 3,
+                name: "Q"
             },
             {
                 id: 4,
@@ -40,14 +44,10 @@ export default function NewHabit(
             },
             {
                 id: 5,
-                name: "Q"
-            },
-            {
-                id: 6,
                 name: "S"
             },
             {
-                id: 7,
+                id: 6,
                 name: "S"
             }
         ];
