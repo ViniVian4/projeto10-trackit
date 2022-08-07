@@ -16,12 +16,14 @@ export default function Habits() {
     const [newDaysSelected, setNewDaysSelected] = useState([]);
     const [showNewHabit, setShowNewHabit] = useState(false);
 
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
         getHabits(userToken);
     }, []);
 
     function getHabits(userToken) {
-        
+
         const promise = axios.get
         (
             "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
@@ -36,6 +38,7 @@ export default function Habits() {
 
         promise.then(response => {
             setHabits(response.data);
+            setLoading(false);
         });
     };
 
@@ -58,7 +61,8 @@ export default function Habits() {
                     (<></>)
                 }
 
-                {habits.length ?
+                {loading ? (<></>) : (
+                   habits.length ?
                     (
                         <HabitsContainer>
                             {
@@ -74,7 +78,8 @@ export default function Habits() {
                             <p>Você não tem nenhum hábito cadastrado ainda.
                                 Adicione um hábito para começar a trackear!</p>
                         </HabitsContainer>
-                    )}
+                    )                
+                )}
 
             </ContentContainer>
         </Container>

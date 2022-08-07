@@ -7,7 +7,8 @@ import PrivatePage from "./PrivatePage";
 
 import Today from "./Today";
 import Habits from "./Habits";
-import { useLocal } from "./UseLocal";
+import History from "./History";
+
 import { useState } from "react";
 
 export default function App() {
@@ -35,9 +36,17 @@ export default function App() {
                     } />
 
                     <Route path="/habits" element={
-                        <UserContext.Provider value={{ userData }} >
+                        <UserContext.Provider value={{ userData, daylieDone, setDaylieDone }} >
                             <PrivatePage>
                                 <Habits />
+                            </PrivatePage>
+                        </UserContext.Provider>
+                    } />
+
+                    <Route path="/history" element={
+                        <UserContext.Provider value={{ userData, daylieDone }} >
+                            <PrivatePage>
+                                <History />
                             </PrivatePage>
                         </UserContext.Provider>
                     } />

@@ -15,8 +15,8 @@ export default function NewHabit(
         setShowNewHabit,
         getHabits
     }) {
-        const { userData } = useContext(UserContext);
-        const userToken = userData.token;
+    const { userData } = useContext(UserContext);
+    const userToken = userData.token;
 
     const [loading, setLoading] = useState(false);
 

@@ -44,7 +44,7 @@ export default function Today() {
 
         promise.then(response => {
             setDaylies(response.data);
-            if (daylies.length > 0){
+            if ((response.data ).length > 0){
                 const percentage = percentageDayliesDone(response.data);
                 setDaylieDone(percentage);
             }
